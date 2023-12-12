@@ -17,10 +17,16 @@ export const useNotifications = () => {
       }
 
       if (finalStatus !== "granted") {
-        alert("Failed go get push token ntofication!");
+        alert("Failed to get push token for notification!");
+        return "";
       }
 
-      const token = (await Notifications.getExpoPushTokenAsync()).data;
+      const token = (
+        await Notifications.getExpoPushTokenAsync({
+          projectId: "03ee4d7a-d928-4e6c-9b4d-fcab551a54e9",
+        })
+      ).data;
+
       return token;
     } else {
       alert("Must use physical device for Push Notifications");

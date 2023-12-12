@@ -1,23 +1,23 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { useNotifications } from "./hook/useNotifications";
 
-export default function App() {
+const App = () => {
+  const expoPushToken = useNotifications();
+
   return (
     <View style={styles.container}>
-      <Text style={{ color: "#fff" }}>
-        Exemplo de notificações push com Push notifications
-      </Text>
-      <StatusBar style="auto" />
+      <Text>Exemple Token de Push:</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
-    color: "#fff",
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
   },
 });
+
+export default App;
