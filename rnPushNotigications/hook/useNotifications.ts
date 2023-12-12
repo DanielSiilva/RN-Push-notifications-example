@@ -5,6 +5,20 @@ import * as Notifications from "expo-notifications";
 export const useNotifications = () => {
   const [expoPushToken, setExpoPushToken] = useState("");
 
+  const sendTokenToServer = async (token: string) => {
+    try {
+      await fetch("http://192.168.100.77:3000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token }),
+      });
+    } catch (error) {
+      console.error("Erro ao enviar token para o servidor:", error);
+    }
+  };
+
   const registerForPushNotificationsAsync = async () => {
     if (Device.isDevice) {
       const { status: existingStatus } =
@@ -26,6 +40,10 @@ export const useNotifications = () => {
           projectId: "03ee4d7a-d928-4e6c-9b4d-fcab551a54e9",
         })
       ).data;
+
+      if (token) {
+        await sendTokenToServer(token);
+      }
 
       return token;
     } else {
